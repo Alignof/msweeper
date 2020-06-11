@@ -2,7 +2,7 @@ CC	 := gcc
 CFLAGS := -g -O0
 
 INCLUDE  := -I./include
-TARGET   := ./hangman
+TARGET   := ./msweeper
 SRCDIR   := ./src
 OBJDIR   := ./src/obj
 SOURCES  := $(wildcard ./src/*.c)
@@ -21,7 +21,7 @@ install: $(OBJECTS)
 clean:
 	rm -f $(OBJECTS) $(TARGET)
 
-test: hangman
+test: $(TARGET)
 	$(TARGET)
 
 .PHONY: test buildtest clean install
