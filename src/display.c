@@ -34,7 +34,7 @@ void display_field(){
 	printf("\n");
 
 	for(i=0;i<field.size;i++){
-		printf("%2d|",i);
+		printf("%2d|",i+1);
 		for(j=0;j<field.size;j++)
 			display_block(&(field.matrix[i][j]));
 		printf("\n");
