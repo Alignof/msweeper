@@ -2,9 +2,9 @@
 
 int main(int argc,char *argv[]){
 
+	field=calloc(1,sizeof(Field));
 	create_field();
-	display_field();
-	//playgame();
+	playgame();
 
 	return 0;
 }

@@ -1,9 +1,7 @@
 #include "msweeper.h"
 
-void create_field(){
-	int i;
+void get_field_size(){
 	char level;
-
 	do{
 		printf("input field size[S:5*5 M:8*8 L:12*12]>>");
 		scanf("%c",&level);
@@ -11,24 +9,29 @@ void create_field(){
 		switch(level){
 			case 's':
 			case 'S':
-				field.size=5;
+				field->size=5;
 				break;
 			case 'm':
 			case 'M':
-				field.size=8;
+				field->size=8;
 				break;
 			case 'l':
 			case 'L':
-				field.size=12;
+				field->size=12;
 				break;
 			default:
-				field.size=0;
+				field->size=0;
 		}
-	}while(field.size==0);
+	}while(field->size==0);
+}
 
+
+void create_field(){
+	int i;
+
+	get_field_size();
+	field->matrix=(Block **)calloc(field->size,sizeof(Block *));
 	
-	field.matrix=(Block **)calloc(field.size,sizeof(Block *));
-	
-	for(i=0;i<field.size;i++)
-		field.matrix[i]=(Block *)calloc(field.size,sizeof(Block));
+	for(i=0;i<field->size;i++)
+		field->matrix[i]=(Block *)calloc(field->size,sizeof(Block));
 }
