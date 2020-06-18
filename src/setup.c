@@ -10,17 +10,17 @@ void get_field_size(){
 			case 's':
 			case 'S':
 				field->size=5;
-				field->mine_num=3;
+				field->mine_num=4;
 				break;
 			case 'm':
 			case 'M':
 				field->size=8;
-				field->mine_num=4;
+				field->mine_num=5;
 				break;
 			case 'l':
 			case 'L':
 				field->size=12;
-				field->mine_num=7;
+				field->mine_num=8;
 				break;
 			default:
 				field->size=0;
@@ -67,6 +67,7 @@ void set_hint(){
 	for(y=0;y<field->size;y++){
 		for(x=0;x<field->size;x++){
 			field->matrix[x][y].hint=check_around(x,y);
+			// NONE -> HINT
 			if(field->matrix[x][y].hint>0 && field->matrix[x][y].state!=MINE) field->matrix[x][y].state=HINT;
 		}
 	}
