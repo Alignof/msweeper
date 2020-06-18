@@ -1,13 +1,14 @@
 #include "msweeper.h" 
 
 void display_block(Block *block){
+	// !debug: all block opend
 	if(!block->is_opend){
 		switch(block->state){
 			case MINE:
 				printf("\e[31m M\e[39m");
 				break;
 			case HINT:
-				printf("%d",block->hint);
+				printf(" %d",block->hint);
 				break;
 			case NONE:
 				printf("  ");

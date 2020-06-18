@@ -46,6 +46,32 @@ void set_mine(){
 	}
 }
 
+int check_around(int x,int y){
+	int i,j;
+	int hint_num=0;
+
+	for(i=-1;i<=1;i++){
+		for(j=-1;j<=1;j++){
+			if((0 <= x+i && x+i < field->size) && (0 <= y+j && y+j < field->size)){
+				if(field->matrix[x+i][y+j].state==MINE) hint_num++;
+			}
+		}
+	}
+
+	return hint_num;
+}
+
+void set_hint(){
+	int x,y;
+
+	for(y=0;y<field->size;y++){
+		for(x=0;x<field->size;x++){
+			field->matrix[x][y].hint=check_around(x,y);
+			if(field->matrix[x][y].hint>0 && field->matrix[x][y].state!=MINE) field->matrix[x][y].state=HINT;
+		}
+	}
+}
+
 void create_field(){
 	int i;
 
@@ -56,4 +82,5 @@ void create_field(){
 		field->matrix[i]=(Block *)calloc(field->size,sizeof(Block));
 
 	set_mine();
+	set_hint();
 }
