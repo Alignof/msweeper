@@ -1,0 +1,14 @@
+language: c
+
+os:
+  - linux
+
+compiler:
+  - gcc
+  - clang
+
+script:
+  - uname -a
+  - make -v 
+  - gcc -v 
+  - make CFLAGS="${CFLAGS}" CC="${CC}" install
