@@ -39,6 +39,7 @@ void open_automatically(int x,int y){
 
 	if(field->matrix[x][y].state==HINT){
 		field->matrix[x][y].is_opened=true;
+		field->opened_block++;
 		return;
 	}
 

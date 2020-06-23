@@ -9,18 +9,18 @@ void get_field_size(){
 		switch(level){
 			case 's':
 			case 'S':
-				field->size_x=5;
-				field->mine_num=5;
+				field->size_x=10;
+				field->mine_num=20;
 				break;
 			case 'm':
 			case 'M':
-				field->size_x=8;
-				field->mine_num=7;
+				field->size_x=20;
+				field->mine_num=80;
 				break;
 			case 'l':
 			case 'L':
-				field->size_x=12;
-				field->mine_num=10;
+				field->size_x=30;
+				field->mine_num=180;
 				break;
 			default:
 				field->size_x=0;

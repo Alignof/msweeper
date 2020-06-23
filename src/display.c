@@ -1,22 +1,32 @@
 #include "msweeper.h" 
 
-void display_block(Block *block){
+void display_block(Block *block,int x,int y){
 	// !debug: all block opend
+	
+	if(x==field->cursor_x && y==field->cursor_y)
+		printf("\e[45m");
+	else if(block->is_opened)
+		printf("\e[43m");
+	else
+		printf("\e[42m");
+
 	if(block->is_opened){
 		switch(block->state){
 			case MINE:
 				printf("\e[31mM\e[39m");
 				break;
 			case HINT:
-				printf("\e[43m%d\e[49m",block->hint);
+				printf("%d",block->hint);
 				break;
 			case NONE:
-				printf("\e[43m \e[49m");
+				printf(" ");
 				break;
 		}
 	}else{
-		printf("\e[42m \e[49m");
+		printf(" ");
 	}
+
+	printf("\e[49m");
 }
 
 void display_field(){
@@ -29,29 +39,23 @@ void display_field(){
 	printf("\033[2J");
 
 
-	printf("\e[40m  \e[49m");
+	printf("\e[40m  ");
 	for(i=0;i<field->size_y;i++)
-		printf("\e[40m \e[49m");
-	printf("\e[40m  \e[49m\n");
+		printf(" ");
+	printf(" \e[49m\n");
 
 	for(y=0;y<field->size_x;y++){
 		printf("\e[40m  \e[49m");
 		for(x=0;x<field->size_y;x++){
-			if(x==field->cursor_x && y==field->cursor_y){
-				printf("\e[46m");
-				display_block(&(field->matrix[x][y]));
-				printf("\e[49m");
-			}else{
-				display_block(&(field->matrix[x][y]));
-			}
+			display_block(&(field->matrix[x][y]),x,y);
 		}
 		printf("\e[40m  \e[49m\n");
 	}
 
-	printf("\e[40m  \e[49m");
+	printf("\e[40m  ");
 	for(i=0;i<field->size_y;i++)
-		printf("\e[40m \e[49m");
-	printf("\e[40m  \e[49m\n");
+		printf(" ");
+	printf(" \e[49m\n");
 }
 
 void display_gameover(){

@@ -30,7 +30,7 @@ void get_field_size();
 
 // display.c
 void display_field();
-void display_block(Block *block);
+void display_block(Block *block,int x,int y);
 void display_gameover();
 void display_gameclear();
 
