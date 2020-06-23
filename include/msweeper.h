@@ -7,7 +7,7 @@
 #include<curses.h>
 
 typedef struct{
-	bool is_opend;
+	bool is_opened;
 	int hint;
 	enum {NONE, HINT, MINE, FLAG} state;
 }Block;
@@ -17,7 +17,7 @@ typedef struct{
 	int mine_num;
 	int cursor_x;
 	int cursor_y;
-	int opend_block;
+	int opened_block;
 	Block **matrix;
 }Field;
 
@@ -34,5 +34,13 @@ void display_gameover();
 void display_gameclear();
 
 // playgame.c
+bool gameover;
+bool gameclear;
 void playgame();
-void get_open_block(int *x,int *y);
+void get_command();
+void block_open(int x,int y);
+void open_automatically(int x,int y);
+
+// getChar.c
+void getChar();
+

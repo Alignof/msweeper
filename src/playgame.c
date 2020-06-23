@@ -1,65 +1,86 @@
 #include "msweeper.h"
 
-void get_open_block(int *x,int *y){
-	char yin;
-	int xin;
+void get_command(){
+	char command;
 
 	do{
-		printf("Input open block[a 1]>>");
-		scanf(" %c%d",&yin,&xin);
-		*y=yin-'a';
-		*x=xin-1;
-	}while(!((0 <= *y && *y < field->size) && (0 <= *x && *x < field->size)));
+		printf("[o:open f:flag or h,j,k,l]>>");
+		command=getChar();
+
+		switch(command){
+			case 'o':
+				block_open(field->cursor_x,field->cursor_y);
+				break;
+			case 'h':
+				(field->cursor_x)--;
+				break;
+			case 'j':
+				(field->cursor_y)++;
+				break;
+			case 'k':
+				(field->cursor_y)--;
+				break;
+			case 'l':
+				(field->cursor_x)++;
+				break;
+			default:
+				command=0;
+		}
+	}while(!((0 <= field->cursor_y && field->cursor_y < field->size) && (0 <= field->cursor_x && field->cursor_x < field->size)) || command==0);
 }
 
-void open_safety_block(int x,int y){
+void open_automatically(int x,int y){
 	int i,j;
 
 	if(field->matrix[x][y].state==HINT){
-		field->matrix[x][y].is_opend=true;
+		field->matrix[x][y].is_opened=true;
 		return;
 	}
 
-	field->matrix[x][y].is_opend=true;
-	field->opend_block++;
+	field->matrix[x][y].is_opened=true;
+	field->opened_block++;
 
 
 	for(i=-1;i<=1;i++){
 		for(j=-1;j<=1;j++){
 			if((0 <= x+i && x+i < field->size) && (0 <= y+j && y+j < field->size)){
-				if(field->matrix[x+i][y+j].is_opend==false){
-					open_safety_block(x+i,y+j);
+				if(field->matrix[x+i][y+j].is_opened==false){
+					open_automatically(x+i,y+j);
 				}
 			}
 		}
 	}
 }
 
+void block_open(int x,int y){
+	int to_clear=(field->size*field->size)-field->mine_num;
+
+	field->matrix[x][y].is_opened=true;
+	field->opened_block++;
+
+	if(field->matrix[x][y].state==NONE)
+		open_automatically(x,y);
+
+
+	if(field->matrix[x][y].state==MINE)
+		gameover=true;
+
+	if(field->opened_block==to_clear)
+		gameclear=true;
+}
+
 void playgame(){
 	int x,y;
-	int to_clear=(field->size*field->size)-field->mine_num;
-	bool gameover=false;
-	bool gameclear=false;
+	char command;
+	gameover=false;
+	gameclear=false;
 
 	while(1){
 		display_field();
 
-		get_open_block(&x,&y);
-		field->matrix[x][y].is_opend=true;
+		get_command();
 
-		if(field->matrix[x][y].state==MINE){
-			gameover=true;
-			break;
-		}
-
-		if(field->matrix[x][y].state==NONE) open_safety_block(x,y);
-
-		field->opend_block++;
-
-		if(field->opend_block==to_clear){
-			gameclear=true;
-			break;
-		}
+		if(gameover | gameclear) break;
 	}
 
 	if(gameover) display_gameover();
