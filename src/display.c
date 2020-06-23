@@ -2,20 +2,20 @@
 
 void display_block(Block *block){
 	// !debug: all block opend
-	if(block->is_opend){
+	if(block->is_opened){
 		switch(block->state){
 			case MINE:
 				printf("\e[31mM\e[39m");
 				break;
 			case HINT:
-				printf("%d",block->hint);
+				printf("\e[43m%d\e[49m",block->hint);
 				break;
 			case NONE:
-				printf(" ");
+				printf("\e[43m \e[49m");
 				break;
 		}
 	}else{
-		printf("#");
+		printf("\e[42m \e[49m");
 	}
 }
 
@@ -29,30 +29,29 @@ void display_field(){
 	printf("\033[2J");
 
 
-	printf("   ");
-	for(c='a';c<'a'+field->size;c++)
-		printf(" %c",c);
-	printf("\n");
-
-	printf("   ");
+	printf("\e[40m  \e[49m");
 	for(i=0;i<field->size;i++)
-		printf("--",i);
-	printf("\n");
+		printf("\e[40m \e[49m");
+	printf("\e[40m  \e[49m\n");
 
 	for(y=0;y<field->size;y++){
-		printf("%2d|",y+1);
+		printf("\e[40m  \e[49m");
 		for(x=0;x<field->size;x++){
 			if(x==field->cursor_x && y==field->cursor_y){
-				printf(" \e[46m");
+				printf("\e[46m");
 				display_block(&(field->matrix[x][y]));
 				printf("\e[49m");
 			}else{
-				printf(" ");
 				display_block(&(field->matrix[x][y]));
 			}
 		}
-		printf("\n");
+		printf("\e[40m  \e[49m\n");
 	}
+
+	printf("\e[40m  \e[49m");
+	for(i=0;i<field->size;i++)
+		printf("\e[40m \e[49m");
+	printf("\e[40m  \e[49m\n");
 }
 
 void display_gameover(){
@@ -63,7 +62,7 @@ void display_gameover(){
 
 	for(y=0;y<field->size;y++)
 		for(x=0;x<field->size;x++)
-			field->matrix[x][y].is_opend=true;
+			field->matrix[x][y].is_opened=true;
 
 	display_field();
 	printf("game over.\n");
