@@ -4,6 +4,7 @@ void get_command(){
 	char command;
 
 	do{
+		display_field();
 		printf("[o:open f:flag or h,j,k,l]>>");
 		command=getChar();
 
@@ -12,21 +13,25 @@ void get_command(){
 				block_open(field->cursor_x,field->cursor_y);
 				break;
 			case 'h':
-				(field->cursor_x)--;
+				if(0 < field->cursor_x)
+					(field->cursor_x)--;
 				break;
 			case 'j':
-				(field->cursor_y)++;
+				if(field->cursor_y < field->size-1)
+					(field->cursor_y)++;
 				break;
 			case 'k':
-				(field->cursor_y)--;
+				if(0 < field->cursor_y)
+					(field->cursor_y)--;
 				break;
 			case 'l':
-				(field->cursor_x)++;
+				if(field->cursor_x < field->size-1)
+					(field->cursor_x)++;
 				break;
 			default:
 				command=0;
 		}
-	}while(!((0 <= field->cursor_y && field->cursor_y < field->size) && (0 <= field->cursor_x && field->cursor_x < field->size)) || command==0);
+	}while(!((0 < field->cursor_y && field->cursor_y < field->size-1) && (0 < field->cursor_x && field->cursor_x < field->size-1)) || command==0);
 }
 
 void open_automatically(int x,int y){
@@ -71,15 +76,11 @@ void block_open(int x,int y){
 
 void playgame(){
 	int x,y;
-	char command;
 	gameover=false;
 	gameclear=false;
 
 	while(1){
-		display_field();
-
 		get_command();
-
 		if(gameover | gameclear) break;
 	}
 

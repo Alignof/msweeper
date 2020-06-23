@@ -10,17 +10,17 @@ void get_field_size(){
 			case 's':
 			case 'S':
 				field->size=5;
-				field->mine_num=4;
+				field->mine_num=5;
 				break;
 			case 'm':
 			case 'M':
 				field->size=8;
-				field->mine_num=5;
+				field->mine_num=7;
 				break;
 			case 'l':
 			case 'L':
 				field->size=12;
-				field->mine_num=8;
+				field->mine_num=10;
 				break;
 			default:
 				field->size=0;

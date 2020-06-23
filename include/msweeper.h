@@ -42,5 +42,5 @@ void block_open(int x,int y);
 void open_automatically(int x,int y);
 
 // getChar.c
-void getChar();
+char getChar();
 
