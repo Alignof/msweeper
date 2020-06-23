@@ -15,6 +15,8 @@ typedef struct{
 typedef struct{
 	int size;
 	int mine_num;
+	int cursor_x;
+	int cursor_y;
 	int opend_block;
 	Block **matrix;
 }Field;

@@ -84,4 +84,7 @@ void create_field(){
 
 	set_mine();
 	set_hint();
+
+	field->cursor_x=0;
+	field->cursor_y=0;
 }
