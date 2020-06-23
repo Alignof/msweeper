@@ -17,7 +17,7 @@ void get_command(){
 					(field->cursor_x)--;
 				break;
 			case 'j':
-				if(field->cursor_y < field->size-1)
+				if(field->cursor_y < field->size_x-1)
 					(field->cursor_y)++;
 				break;
 			case 'k':
@@ -25,13 +25,13 @@ void get_command(){
 					(field->cursor_y)--;
 				break;
 			case 'l':
-				if(field->cursor_x < field->size-1)
+				if(field->cursor_x < field->size_y-1)
 					(field->cursor_x)++;
 				break;
 			default:
 				command=0;
 		}
-	}while(!((0 < field->cursor_y && field->cursor_y < field->size-1) && (0 < field->cursor_x && field->cursor_x < field->size-1)) || command==0);
+	}while(!((0 < field->cursor_y && field->cursor_y < field->size_x-1) && (0 < field->cursor_x && field->cursor_x < field->size_y-1)) || command==0);
 }
 
 void open_automatically(int x,int y){
@@ -48,7 +48,7 @@ void open_automatically(int x,int y){
 
 	for(i=-1;i<=1;i++){
 		for(j=-1;j<=1;j++){
-			if((0 <= x+i && x+i < field->size) && (0 <= y+j && y+j < field->size)){
+			if((0 <= x+i && x+i < field->size_y) && (0 <= y+j && y+j < field->size_x)){
 				if(field->matrix[x+i][y+j].is_opened==false){
 					open_automatically(x+i,y+j);
 				}
@@ -58,7 +58,7 @@ void open_automatically(int x,int y){
 }
 
 void block_open(int x,int y){
-	int to_clear=(field->size*field->size)-field->mine_num;
+	int to_clear=(field->size_y*field->size_x)-field->mine_num;
 
 	field->matrix[x][y].is_opened=true;
 	field->opened_block++;

@@ -13,7 +13,8 @@ typedef struct{
 }Block;
 
 typedef struct{
-	int size;
+	int size_x;
+	int size_y;
 	int mine_num;
 	int cursor_x;
 	int cursor_y;
