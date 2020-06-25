@@ -41,7 +41,7 @@ bool gameclear;
 void playgame();
 void get_command();
 void block_open(int x,int y);
-void raise_your_flag(int x,int y);
+void raise_your_flag(Block *block);
 void open_automatically(int x,int y);
 
 // getChar.c

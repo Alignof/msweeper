@@ -13,7 +13,7 @@ void get_command(){
 				block_open(field->cursor_x,field->cursor_y);
 				break;
 			case 'f':
-				raise_your_flag(field->cursor_x,field->cursor_y);
+				raise_your_flag(&(field->matrix[field->cursor_x][field->cursor_y]));
 				break;
 			case 'h':
 				if(0 < field->cursor_x)
@@ -37,52 +37,57 @@ void get_command(){
 	}while(!((0 < field->cursor_y && field->cursor_y < field->size_x-1) && (0 < field->cursor_x && field->cursor_x < field->size_y-1)) || command==0);
 }
 
-void raise_your_flag(int x,int y){
-	if(field->matrix[x][y].is_opened==false)
-		field->matrix[x][y].raise_flag=!(field->matrix[x][y].raise_flag);
+void raise_your_flag(Block *block){
+	if(block->is_opened==false)
+		block->raise_flag=!(block->raise_flag);
 }
 
 void open_automatically(int x,int y){
 	int i,j;
 
-	if(field->matrix[x][y].state==HINT){
+	if(field->matrix[x][y].state==HINT && !(field->matrix[x][y].is_opened)){
 		field->matrix[x][y].is_opened=true;
 		field->opened_block++;
 		return;
 	}
 
-	field->matrix[x][y].is_opened=true;
-	field->opened_block++;
-
-
-	for(i=-1;i<=1;i++){
-		for(j=-1;j<=1;j++){
-			if((0 <= x+i && x+i < field->size_y) && (0 <= y+j && y+j < field->size_x)){
-				if(field->matrix[x+i][y+j].is_opened==false){
-					open_automatically(x+i,y+j);
-				}
-			}
-		}
+	if(field->matrix[x][y].is_opened==false){
+		field->matrix[x][y].is_opened=true;
+		field->opened_block++;
 	}
+
+	if(0<=x-1 && field->matrix[x-1][y].is_opened==false)
+		open_automatically(x-1,y);
+	if(x+1<field->size_y && field->matrix[x+1][y].is_opened==false)
+		open_automatically(x+1,y);
+	if(0<=y-1 && field->matrix[x][y-1].is_opened==false)
+		open_automatically(x,y-1);
+	if(y+1<field->size_x && field->matrix[x][y+1].is_opened==false)
+		open_automatically(x,y+1);
 }
 
 void block_open(int x,int y){
+	Block *block=&(field->matrix[x][y]);
 	int to_clear=(field->size_y*field->size_x)-field->mine_num;
 
-	field->matrix[x][y].is_opened=true;
+	if(block->is_opened)
+		return;
+
+	block->is_opened=true;
 	field->opened_block++;
 
-	if(field->matrix[x][y].state==NONE)
+	if(block->state==NONE)
 		open_automatically(x,y);
 
 
-	if(field->matrix[x][y].state==MINE)
+	if(block->state==MINE)
 		gameover=true;
 
 	if(field->opened_block==to_clear)
 		gameclear=true;
 
-	printf("opened_block:%d",field->opened_block);
+	printf("\nto_clear:%d\n",to_clear);
+	printf("opened_block:%d\n",field->opened_block);
 }
 
 void playgame(){
