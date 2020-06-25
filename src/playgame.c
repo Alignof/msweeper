@@ -70,7 +70,7 @@ void block_open(int x,int y){
 	Block *block=&(field->matrix[x][y]);
 	int to_clear=(field->size_y*field->size_x)-field->mine_num;
 
-	if(block->is_opened)
+	if(block->is_opened || block->raise_flag)
 		return;
 
 	block->is_opened=true;
