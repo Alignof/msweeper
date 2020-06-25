@@ -12,6 +12,9 @@ void get_command(){
 			case 'o':
 				block_open(field->cursor_x,field->cursor_y);
 				break;
+			case 'f':
+				raise_your_flag(field->cursor_x,field->cursor_y);
+				break;
 			case 'h':
 				if(0 < field->cursor_x)
 					(field->cursor_x)--;
@@ -32,6 +35,11 @@ void get_command(){
 				command=0;
 		}
 	}while(!((0 < field->cursor_y && field->cursor_y < field->size_x-1) && (0 < field->cursor_x && field->cursor_x < field->size_y-1)) || command==0);
+}
+
+void raise_your_flag(int x,int y){
+	if(field->matrix[x][y].is_opened==false)
+		field->matrix[x][y].raise_flag=!(field->matrix[x][y].raise_flag);
 }
 
 void open_automatically(int x,int y){
@@ -73,6 +81,8 @@ void block_open(int x,int y){
 
 	if(field->opened_block==to_clear)
 		gameclear=true;
+
+	printf("opened_block:%d",field->opened_block);
 }
 
 void playgame(){

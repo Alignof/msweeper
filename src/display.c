@@ -23,7 +23,10 @@ void display_block(Block *block,int x,int y){
 				break;
 		}
 	}else{
-		printf(" ");
+		if(block->raise_flag)
+			printf("\e[31mF\e[39m");
+		else
+			printf(" ");
 	}
 
 	printf("\e[49m");
@@ -42,7 +45,7 @@ void display_field(){
 	printf("\e[40m  ");
 	for(i=0;i<field->size_y;i++)
 		printf(" ");
-	printf(" \e[49m\n");
+	printf("  \e[49m\n");
 
 	for(y=0;y<field->size_x;y++){
 		printf("\e[40m  \e[49m");
@@ -55,7 +58,7 @@ void display_field(){
 	printf("\e[40m  ");
 	for(i=0;i<field->size_y;i++)
 		printf(" ");
-	printf(" \e[49m\n");
+	printf("  \e[49m\n");
 }
 
 void display_gameover(){

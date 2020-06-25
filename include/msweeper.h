@@ -8,6 +8,7 @@
 
 typedef struct{
 	bool is_opened;
+	bool raise_flag;
 	int hint;
 	enum {NONE, HINT, MINE, FLAG} state;
 }Block;
@@ -40,6 +41,7 @@ bool gameclear;
 void playgame();
 void get_command();
 void block_open(int x,int y);
+void raise_your_flag(int x,int y);
 void open_automatically(int x,int y);
 
 // getChar.c
