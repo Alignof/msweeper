@@ -1,7 +1,7 @@
 CC	 := gcc
 CFLAGS := -g -O0
 
-INCLUDE  := -I./include
+INCLUDE  := -I ./include
 TARGET   := ./msweeper
 SRCDIR   := ./src
 OBJDIR   := ./src/obj
