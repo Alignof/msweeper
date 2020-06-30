@@ -27,6 +27,7 @@ void get_field_size(){
 		}
 	}while(field->size_x==0);
 	field->size_y=(field->size_x)*2;
+	field->remain_flag=field->mine_num;
 }
 
 void set_mine(){

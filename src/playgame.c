@@ -5,7 +5,7 @@ void get_command(){
 
 	do{
 		display_field();
-		printf("[o:open f:flag or h,j,k,l]>>");
+		display_prompt();
 		command=getChar();
 
 		switch(command){
@@ -38,8 +38,14 @@ void get_command(){
 }
 
 void raise_your_flag(Block *block){
-	if(block->is_opened==false)
+	if(block->is_opened==false){
 		block->raise_flag=!(block->raise_flag);
+
+		if(block->raise_flag)
+			field->remain_flag--;
+		else
+			field->remain_flag++;
+	}
 }
 
 void open_automatically(int x,int y){

@@ -16,9 +16,10 @@ typedef struct{
 typedef struct{
 	int size_x;
 	int size_y;
-	int mine_num;
 	int cursor_x;
 	int cursor_y;
+	int mine_num;
+	int remain_flag;
 	int opened_block;
 	Block **matrix;
 }Field;
@@ -30,6 +31,7 @@ void create_field();
 void get_field_size();
 
 // display.c
+void display_prompt();
 void display_field();
 void display_block(Block *block,int x,int y);
 void display_gameover();

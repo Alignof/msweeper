@@ -1,5 +1,10 @@
 #include "msweeper.h" 
 
+void display_prompt(){
+	printf("remain mine:%d\n",field->remain_flag);
+	printf("[o:open f:flag or h,j,k,l]>>");
+}
+
 void display_block(Block *block,int x,int y){
 	// !debug: all block opend
 	
