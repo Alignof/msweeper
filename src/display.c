@@ -48,20 +48,20 @@ void display_field(){
 
 
 	printf("\e[40m  ");
-	for(i=0;i<field->size_y;i++)
+	for(i=0;i<field->size_x;i++)
 		printf(" ");
 	printf("  \e[49m\n");
 
-	for(y=0;y<field->size_x;y++){
+	for(y=0;y<field->size_y;y++){
 		printf("\e[40m  \e[49m");
-		for(x=0;x<field->size_y;x++){
+		for(x=0;x<field->size_x;x++){
 			display_block(&(field->matrix[x][y]),x,y);
 		}
 		printf("\e[40m  \e[49m\n");
 	}
 
 	printf("\e[40m  ");
-	for(i=0;i<field->size_y;i++)
+	for(i=0;i<field->size_x;i++)
 		printf(" ");
 	printf("  \e[49m\n");
 }
@@ -71,8 +71,8 @@ void display_gameover(){
 	int x,y;
 	char c;
 
-	for(y=0;y<field->size_x;y++)
-		for(x=0;x<field->size_y;x++)
+	for(y=0;y<field->size_y;y++)
+		for(x=0;x<field->size_x;x++)
 			field->matrix[x][y].is_opened=true;
 
 	display_field();
