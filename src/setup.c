@@ -30,7 +30,7 @@ void get_field_size(){
 	field->remain_flag=field->mine_num;
 }
 
-void set_mine(){
+void set_mine(int first_x,int first_y){
 	int x,y;
 	int counter=0;
 
@@ -39,6 +39,9 @@ void set_mine(){
 	while(counter < field->mine_num){
 		x=rand()%(field->size_y);
 		y=rand()%(field->size_x);
+
+		if(x-1==first_x || x==first_x || x+1==first_x || y-1==first_y || y==first_y || y+1==first_y)
+			continue;
 
 		if(field->matrix[x][y].state==MINE)
 			continue;
@@ -84,8 +87,8 @@ void create_field(){
 	for(i=0;i<field->size_y;i++)
 		field->matrix[i]=(Block *)calloc(field->size_x,sizeof(Block));
 
-	set_mine();
-	set_hint();
+	//set_mine();
+	//set_hint();
 
 	field->cursor_x=0;
 	field->cursor_y=0;

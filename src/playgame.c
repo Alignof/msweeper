@@ -73,8 +73,15 @@ void open_automatically(int x,int y){
 }
 
 void block_open(int x,int y){
+	static bool is_first=true;
 	Block *block=&(field->matrix[x][y]);
 	int to_clear=(field->size_y*field->size_x)-field->mine_num;
+
+	if(is_first){
+		set_mine(x,y);
+		set_hint();
+		is_first=false;
+	}
 
 	if(block->is_opened || block->raise_flag)
 		return;

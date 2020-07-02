@@ -29,6 +29,9 @@ Field *field;
 // setup.c
 void create_field();
 void get_field_size();
+void set_hint();
+void set_mine(int first_x,int first_y);
+int check_around(int x,int y);
 
 // display.c
 void display_prompt();
