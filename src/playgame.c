@@ -108,11 +108,20 @@ void playgame(){
 	gameover=false;
 	gameclear=false;
 
+	struct timeval start, end;
+	gettimeofday(&start, NULL);
+
 	while(1){
 		get_command();
 		if(gameover | gameclear) break;
 	}
 
+	gettimeofday(&end, NULL);
+	double seconds = (end.tv_sec - start.tv_sec);
+	double micros = ((seconds * 1000000) + end.tv_usec) - (start.tv_usec);
+
 	if(gameover) display_gameover();
 	if(gameclear) display_gameclear();
+
+	printf("time:%.2f\n", micros/1000000);
 }
