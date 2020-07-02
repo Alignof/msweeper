@@ -20,7 +20,7 @@ void get_command(){
 					(field->cursor_x)--;
 				break;
 			case 'j':
-				if(field->cursor_y < field->size_x-1)
+				if(field->cursor_y < field->size_y-1)
 					(field->cursor_y)++;
 				break;
 			case 'k':
@@ -28,13 +28,13 @@ void get_command(){
 					(field->cursor_y)--;
 				break;
 			case 'l':
-				if(field->cursor_x < field->size_y-1)
+				if(field->cursor_x < field->size_x-1)
 					(field->cursor_x)++;
 				break;
 			default:
 				command=0;
 		}
-	}while(!((0 < field->cursor_y && field->cursor_y < field->size_x-1) && (0 < field->cursor_x && field->cursor_x < field->size_y-1)) || command==0);
+	}while(!((0 < field->cursor_y && field->cursor_y < field->size_y-1) && (0 < field->cursor_x && field->cursor_x < field->size_x-1)) || command==0);
 }
 
 void raise_your_flag(Block *block){
@@ -64,17 +64,24 @@ void open_automatically(int x,int y){
 
 	if(0<=x-1 && field->matrix[x-1][y].is_opened==false)
 		open_automatically(x-1,y);
-	if(x+1<field->size_y && field->matrix[x+1][y].is_opened==false)
+	if(x+1<field->size_x && field->matrix[x+1][y].is_opened==false)
 		open_automatically(x+1,y);
 	if(0<=y-1 && field->matrix[x][y-1].is_opened==false)
 		open_automatically(x,y-1);
-	if(y+1<field->size_x && field->matrix[x][y+1].is_opened==false)
+	if(y+1<field->size_y && field->matrix[x][y+1].is_opened==false)
 		open_automatically(x,y+1);
 }
 
 void block_open(int x,int y){
+	static bool is_first=true;
 	Block *block=&(field->matrix[x][y]);
-	int to_clear=(field->size_y*field->size_x)-field->mine_num;
+	int to_clear=(field->size_x*field->size_y)-field->mine_num;
+
+	if(is_first){
+		set_mine(x,y);
+		set_hint();
+		is_first=false;
+	}
 
 	if(block->is_opened || block->raise_flag)
 		return;
@@ -101,11 +108,20 @@ void playgame(){
 	gameover=false;
 	gameclear=false;
 
+	struct timeval start, end;
+	gettimeofday(&start, NULL);
+
 	while(1){
 		get_command();
 		if(gameover | gameclear) break;
 	}
 
+	gettimeofday(&end, NULL);
+	double seconds = (end.tv_sec - start.tv_sec);
+	double micros = ((seconds * 1000000) + end.tv_usec) - (start.tv_usec);
+
 	if(gameover) display_gameover();
 	if(gameclear) display_gameclear();
+
+	printf("time:%.2f\n", micros/1000000);
 }

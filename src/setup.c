@@ -9,36 +9,39 @@ void get_field_size(){
 		switch(level){
 			case 's':
 			case 'S':
-				field->size_x=10;
+				field->size_y=10;
 				field->mine_num=20;
 				break;
 			case 'm':
 			case 'M':
-				field->size_x=20;
+				field->size_y=20;
 				field->mine_num=80;
 				break;
 			case 'l':
 			case 'L':
-				field->size_x=30;
+				field->size_y=30;
 				field->mine_num=180;
 				break;
 			default:
-				field->size_x=0;
+				field->size_y=0;
 		}
-	}while(field->size_x==0);
-	field->size_y=(field->size_x)*2;
+	}while(field->size_y==0);
+	field->size_x=(field->size_y)*2;
 	field->remain_flag=field->mine_num;
 }
 
-void set_mine(){
+void set_mine(int first_x,int first_y){
 	int x,y;
 	int counter=0;
 
 	srand((unsigned)time(NULL));
 
 	while(counter < field->mine_num){
-		x=rand()%(field->size_y);
-		y=rand()%(field->size_x);
+		x=rand()%(field->size_x);
+		y=rand()%(field->size_y);
+
+		if(x-1==first_x || x==first_x || x+1==first_x || y-1==first_y || y==first_y || y+1==first_y)
+			continue;
 
 		if(field->matrix[x][y].state==MINE)
 			continue;
@@ -54,7 +57,7 @@ int check_around(int x,int y){
 
 	for(i=-1;i<=1;i++){
 		for(j=-1;j<=1;j++){
-			if((0 <= x+i && x+i < field->size_y) && (0 <= y+j && y+j < field->size_x)){
+			if((0 <= x+i && x+i < field->size_x) && (0 <= y+j && y+j < field->size_y)){
 				if(field->matrix[x+i][y+j].state==MINE) hint_num++;
 			}
 		}
@@ -66,8 +69,8 @@ int check_around(int x,int y){
 void set_hint(){
 	int x,y;
 
-	for(y=0;y<field->size_x;y++){
-		for(x=0;x<field->size_y;x++){
+	for(y=0;y<field->size_y;y++){
+		for(x=0;x<field->size_x;x++){
 			field->matrix[x][y].hint=check_around(x,y);
 			// NONE -> HINT
 			if(field->matrix[x][y].hint>0 && field->matrix[x][y].state!=MINE) field->matrix[x][y].state=HINT;
@@ -79,13 +82,10 @@ void create_field(){
 	int i;
 
 	get_field_size();
-	field->matrix=(Block **)calloc(field->size_y,sizeof(Block *));
+	field->matrix=(Block **)calloc(field->size_x,sizeof(Block *));
 	
-	for(i=0;i<field->size_y;i++)
-		field->matrix[i]=(Block *)calloc(field->size_x,sizeof(Block));
-
-	set_mine();
-	set_hint();
+	for(i=0;i<field->size_x;i++)
+		field->matrix[i]=(Block *)calloc(field->size_y,sizeof(Block));
 
 	field->cursor_x=0;
 	field->cursor_y=0;
