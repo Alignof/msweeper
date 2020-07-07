@@ -117,8 +117,8 @@ void playgame(){
 	}
 
 	gettimeofday(&end, NULL);
-	double seconds = (end.tv_sec - start.tv_sec);
-	double micros = ((seconds * 1000000) + end.tv_usec) - (start.tv_usec);
+	double seconds=(end.tv_sec-start.tv_sec);
+	double micros=((seconds*1000000)+end.tv_usec)-(start.tv_usec);
 
 	if(gameover) display_gameover();
 	if(gameclear) display_gameclear();
