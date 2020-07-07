@@ -2,6 +2,7 @@
 
 void get_command(){
 	char command;
+
 	do{
 		display_field();
 		display_prompt();
@@ -29,6 +30,12 @@ void get_command(){
 			case 'l':
 				if(field->cursor_x < field->size_x-1)
 					(field->cursor_x)++;
+				break;
+			case '^':
+				field->cursor_x=0;
+				break;
+			case '$':
+				field->cursor_x=field->size_x-1;
 				break;
 			case 'g':
 				field->cursor_y=0;
