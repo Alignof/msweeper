@@ -42,9 +42,9 @@ void display_field(){
 	int x,y;
 	char c;
 
-	//printf("\033c");
-	printf("\033[1;1H");
-	printf("\033[2J");
+	printf("\033c");
+	//printf("\033[1;1H");
+	//printf("\033[2J");
 
 
 	printf("\e[40m  ");
@@ -76,9 +76,9 @@ void display_gameover(){
 			field->matrix[x][y].is_opened=true;
 
 	display_field();
-	printf("game over.\n");
+	printf("\ngame over.\n");
 }
 
 void display_gameclear(){
-	printf("game clear.\n");
+	printf("\ngame clear.\n");
 }
