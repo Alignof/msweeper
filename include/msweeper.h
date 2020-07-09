@@ -51,4 +51,3 @@ void open_automatically(int x,int y);
 
 // getChar.c
 char getChar();
-

@@ -12,3 +12,17 @@ testing
 ```zsh
 $ make test
 ```
+
+## keymap
+| key | action |
+|:---:|:---:|
+| o | open |
+| f | flag |
+| h | left |
+| j | up |
+| k | down |
+| l | right |
+| g  | top |
+| G  | bottom |
+| ^  | head |
+| $  | tail |
