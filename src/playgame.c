@@ -1,5 +1,9 @@
 #include "msweeper.h"
 
+bool in_field(int x,int y){
+	return (0 < x && x < field->size_x-1) && (0 < y && y < field->size_y-1);
+}
+
 void get_command(){
 	char command;
 
@@ -46,7 +50,7 @@ void get_command(){
 			default:
 				command=0;
 		}
-	}while(!((0 < field->cursor_y && field->cursor_y < field->size_y-1) && (0 < field->cursor_x && field->cursor_x < field->size_x-1)) || command==0);
+	}while(!(in_field(field->cursor_x,field->cursor_y)) || command==0);
 }
 
 void raise_your_flag(Block *block){
