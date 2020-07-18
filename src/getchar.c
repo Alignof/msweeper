@@ -13,5 +13,5 @@ char getChar(void){
 	c=getchar();
 	ioctl(0,TCSETAW, &old_term);
 
-	return (c);
+	return c;
 }	
