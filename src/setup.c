@@ -3,7 +3,7 @@
 void get_field_size(){
 	char level;
 	do{
-		printf("input field size[S:5*5 M:8*8 L:12*12]>>");
+		printf("input field size[S:5*10 M:8*16 L:12*24]>>");
 		scanf("%c",&level);
 
 		switch(level){
