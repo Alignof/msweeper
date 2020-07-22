@@ -43,7 +43,6 @@ void display_gameclear();
 // playgame.c
 bool gameover;
 bool gameclear;
-bool in_field(int x,int y);
 void playgame();
 void get_command();
 void block_open(int x,int y);
